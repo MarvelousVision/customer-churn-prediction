@@ -24,18 +24,6 @@ X_train, X_test, y_train, y_test = train_test_split_data(
 
 m = build_model_pipeline(X_train)
 base_result = fit_and_score_model(m, X_train, X_test, y_train)
-# joblib.dump(m1, "artifacts/churn_model.joblib")
-# m = joblib.load("artifacts/churn_model.joblib")
-model = m.named_steps["model"]
-features_names = m.named_steps["prep"].get_feature_names_out()
-importances = model.feature_importances_
-
-i_df = pd.DataFrame({"feature": features_names, "importance": importances}).sort_values(
-    "importance", ascending=False
-)
-
-print(i_df.head(15).to_string(index=False))
-
 
 cv = base_result["cv_mean"]
 y_proba = base_result["y_proba"]
