@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.vscode/
+catboost_info/
+.env
+venv/
+.venv/
+notebooks/
+artifacts/*.joblib
