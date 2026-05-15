@@ -1,9 +1,6 @@
-from sklearn.model_selection import cross_val_score
-import pandas as pd
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import precision_recall_curve
+from pathlib import Path
 
-import matplotlib.pyplot as plt
+import joblib
 from data import load_data, split_features_target, train_test_split_data, load_config
 from model import (
     build_model_pipeline,
@@ -11,7 +8,9 @@ from model import (
     fit_and_score_model,
 )
 
-from datetime import datetime
+ROOT_DIR = Path(__file__).resolve().parents[1]
+MODEL_PATH = ROOT_DIR / "artifacts" / "churn_model.joblib"
+
 
 config = load_config()
 df = load_data()
@@ -21,12 +20,12 @@ X_train, X_test, y_train, y_test = train_test_split_data(
     X, y, config["data"]["test_size"], config["data"]["random_state"]
 )
 
-
 m = build_model_pipeline(X_train)
 base_result = fit_and_score_model(m, X_train, X_test, y_train)
 
 cv = base_result["cv_mean"]
 y_proba = base_result["y_proba"]
+
 for threshold in [0.3]:
     result = evaluate_model(y_proba, y_test, threshold)
     print("Model:", config["model"]["type"])
@@ -37,3 +36,6 @@ for threshold in [0.3]:
     print(f"Recall:    {result['recall']:.4f}")
     print(f"Profit:    {result['profit']:,}")
     print("-" * 40)
+
+joblib.dump(m, MODEL_PATH)
+print(f"Model saved to: {MODEL_PATH}")
