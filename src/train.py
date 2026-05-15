@@ -10,7 +10,7 @@ from model import (
     evaluate_model,
     fit_and_score_model,
 )
-import joblib
+
 from datetime import datetime
 
 config = load_config()

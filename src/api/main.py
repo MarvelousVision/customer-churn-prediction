@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 import pandas as pd
-from src.api.schemas import UserData
+from src.api.schemas import UserData, ModelInfoResponse
 from src.api.model_loader import model, model_info, THRESHOLD
 
 app = FastAPI(title="Churn Prediction API")
@@ -11,7 +11,7 @@ def health():
     return {"status": "ok"}
 
 
-@app.get("/model-info")
+@app.get("/model-info", response_model=ModelInfoResponse)
 def get_model_info():
     return model_info
 
@@ -33,8 +33,8 @@ def predict(user_data: UserData):
             "probability": float(probability),
             "threshold": THRESHOLD,
         }
-    except Exception:
-        raise HTTPException(status_code=500, detail="Prediction failed")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @app.get("/")

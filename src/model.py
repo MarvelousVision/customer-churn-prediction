@@ -5,7 +5,6 @@ import pandas as pd
 from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import RandomizedSearchCV
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import cross_val_score
 from sklearn.tree import DecisionTreeClassifier
@@ -111,7 +110,6 @@ def evaluate_model(y_proba, y_test, threshold):
 
 
 def fit_and_score_model(m, X_train, X_test, y_train):
-    config = load_config()
     cv_scores = cross_val_score(m, X_train, y_train, cv=4)
     cv_mean = cv_scores.mean()
 
@@ -119,21 +117,3 @@ def fit_and_score_model(m, X_train, X_test, y_train):
 
     y_proba = m.predict_proba(X_test)[:, 1]
     return {"cv_mean": cv_mean, "y_proba": y_proba}
-
-
-def tune_catboost_randomized(m, X_train, y_train, n_iter=20, cv=4, scoring="roc_auc"):
-    param_distributions = {
-        "model__depth": randint(3, 11),
-        "model__learning_rate": uniform(0.01, 0.3),
-        "model__iterations": [60, 75, 100],
-        "model__min_data_in_leaf": randint(1, 101),
-    }
-    random_search = RandomizedSearchCV(
-        estimator=m,
-        param_distributions=param_distributions,
-        random_state=42,
-        verbose=0,
-    )
-    random_search.fit(X_train, y_train)
-
-    return random_search
