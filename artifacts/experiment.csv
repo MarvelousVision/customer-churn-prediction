@@ -1,5 +1,0 @@
-experiment_name,model,features_version,threshold,cv_mean,accuracy,precision,recall,profit,depth,iterations,learning_rate,notes
-lr_base_t03,logistic_regression,base,0.3,0.6861,0.6029,0.4514,0.9194,354540,,,,simple baseline
-rf_base_t03,random_forest,base,0.3,0.7477,0.5789,0.44,0.992,479640,15.0,100.0,,strong recall
-cat_base_t03,catboost,base,0.3,0.7617,0.5779,0.4397,0.9968,488180,8.0,60.0,0.03,best final
-cat_extra_feat_t03,catboost,extra_features,0.3,0.7616,0.5784,0.4399,0.9961,486960,8.0,60.0,0.03,new features did not help
