@@ -82,7 +82,7 @@ The trained model is exposed through a FastAPI service.
 {
   "prediction": 1,
   "label": "churn",
-  "probability": 0.59,
+  "probability": 0.6090453355565285,
   "threshold": 0.3
 }
 ```
