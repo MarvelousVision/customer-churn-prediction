@@ -1,8 +1,8 @@
 from pathlib import Path
 
 import joblib
-from data import load_data, split_features_target, train_test_split_data, load_config
-from model import (
+from .data import load_data, split_features_target, train_test_split_data, load_config
+from .model import (
     build_model_pipeline,
     evaluate_model,
     fit_and_score_model,

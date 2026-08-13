@@ -1,6 +1,5 @@
 import yaml
-from features import create_preprocessor
-from features import FeatureEngineer
+from .features import create_preprocessor, FeatureEngineer
 import pandas as pd
 from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestClassifier
@@ -8,7 +7,6 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import cross_val_score
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
 from catboost import CatBoostClassifier
 
 from scipy.stats import uniform, randint
@@ -22,7 +20,7 @@ from sklearn.metrics import (
 from sklearn.metrics import precision_recall_curve
 
 import matplotlib.pyplot as plt
-from data import load_data, split_features_target, train_test_split_data, load_config
+from .data import load_config
 
 
 def load_config():
