@@ -1,12 +1,12 @@
 # Customer Churn Prediction for a Telecom Company
 
-A production-oriented machine learning project for predicting telecom customer churn with a profit-driven decision threshold and a deployed FastAPI service.
+An end-to-end machine learning project for predicting telecom customer churn with a profit-driven decision threshold and FastAPI inference service.
 
 ## Project Summary
 
 The goal of this project was to identify customers at risk of churn and optimize business profit rather than maximize a generic metric like accuracy.
 
-The final solution used a **CatBoost** model with a classification threshold of **0.3**, selected based on business impact and recall-oriented evaluation.
+The final model choice was CatBoost with a threshold of 0.3.
 
 ## Business Problem
 
