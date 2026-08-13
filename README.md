@@ -1,70 +1,83 @@
 # Customer Churn Prediction for a Telecom Company
 
-An end-to-end machine learning project for predicting telecom customer churn with a profit-driven decision threshold and FastAPI inference service.
+An end-to-end machine learning project for predicting telecom customer churn with a profit-driven classification threshold and a FastAPI inference service.
 
 ## Project Summary
 
-The goal of this project was to identify customers at risk of churn and optimize business profit rather than maximize a generic metric like accuracy.
+The goal of this project was to identify customers at risk of churn and optimize the business outcome rather than maximize a generic metric such as accuracy.
 
-The final model choice was CatBoost with a threshold of 0.3.
+The final selected model was **CatBoost** with a classification threshold of **0.3**.
 
 ## Business Problem
 
-In this task, missing a true churn customer was more expensive than contacting a loyal customer unnecessarily.  
-Because of that, the project focused on **recall** and **profit-based decision-making** instead of accuracy alone.
+Missing a customer who is actually going to churn was considered more expensive than unnecessarily contacting a loyal customer.
+
+Because of this, the project prioritized:
+
+* high recall for churn customers;
+* threshold optimization;
+* a custom business profit metric.
+
+This allowed the final decision threshold to be selected based on business impact rather than using the default threshold of 0.5.
 
 ## Approach
 
-The project includes a full ML workflow:
+The project includes a complete machine learning workflow:
 
-- custom feature engineering
-- preprocessing for numerical and categorical features
-- missing value handling with `SimpleImputer`
-- categorical encoding with `OneHotEncoder`
-- feature transformation with `ColumnTransformer`
-- controlled model comparison
-- threshold tuning
-- saved model artifacts
-- FastAPI deployment
+* exploratory data analysis;
+* custom feature engineering;
+* preprocessing of numerical and categorical features;
+* missing-value handling with `SimpleImputer`;
+* categorical encoding with `OneHotEncoder`;
+* preprocessing with `ColumnTransformer`;
+* comparison of several classification models;
+* cross-validation;
+* classification-threshold tuning;
+* business profit evaluation;
+* model artifact saving;
+* FastAPI inference service.
 
-The pipeline also helped prevent data leakage and made training and inference reproducible.
+Preprocessing was kept inside the ML pipeline so that transformations were fitted only on training data and applied consistently during validation, testing, and inference.
 
 ## Models Compared
 
 The following models were evaluated:
 
-- Logistic Regression
-- Decision Tree
-- Random Forest
-- CatBoost
+* Logistic Regression
+* Decision Tree
+* Random Forest
+* CatBoost
 
-Experiments were tracked and compared using cross-validation metrics, recall, and business profit.
+Models were compared using cross-validation performance together with recall and the custom business profit metric.
 
 ## Final Result
 
-The final production choice was **CatBoost** with a threshold of **0.3**.
+The final model was **CatBoost** with a threshold of **0.3**.
 
 Key results:
 
-- **Best CV mean:** `0.7617`
-- **Best profit:** `488,560`
-- **Priority metric:** Recall
-- **Important conclusion:** the best CV score and the best business result are not always the same thing
+* **CV mean:** `0.7617`
+* **Accuracy:** `0.5782`
+* **Precision:** `0.4398`
+* **Recall:** `0.9970`
+* **Business profit:** `488,560`
 
-One of the most useful engineered features was **contract_tenure**, while some additional engineered features did not improve the final result enough to keep.
+The project demonstrates an important practical result: the threshold or model with the strongest standard ML metric is not necessarily the one that produces the best business outcome.
 
-## API (FastAPI)
+One of the useful engineered features was `contract_tenure`, while several additional engineered features were excluded because they did not provide meaningful improvement.
+
+## API
 
 The trained model is exposed through a FastAPI service.
 
 ### Endpoints
 
-- `GET /` — API status
-- `GET /health` — health check
-- `GET /model-info` — model metadata
-- `POST /predict` — churn prediction
+* `GET /` — API status
+* `GET /health` — health check
+* `GET /model-info` — model metadata
+* `POST /predict` — churn prediction
 
-### Example request
+### Example Request
 
 ```json
 {
@@ -77,7 +90,9 @@ The trained model is exposed through a FastAPI service.
   "TotalCharges": 1500.5
 }
 ```
-### Example response
+
+### Example Response
+
 ```json
 {
   "prediction": 1,
@@ -86,33 +101,49 @@ The trained model is exposed through a FastAPI service.
   "threshold": 0.3
 }
 ```
-### Repository Structure
 
-src/        source code for training, inference, and API
-configs/    configuration files
-artifacts/  saved model, metadata, and experiment results
-data/       dataset files
+## Repository Structure
 
-## How to run 
+```text
+customer-churn-prediction/
+├── src/          # training, model logic, preprocessing, and API
+├── configs/      # project configuration
+├── artifacts/    # trained model, metadata, and experiment results
+├── data/         # dataset files
+└── requirements.txt
+```
 
-1. Clone the repository:
+## How to Run
+
+Clone the repository:
+
 ```bash
 git clone https://github.com/MarvelousVision/customer-churn-prediction.git
 cd customer-churn-prediction
 ```
-### Install dependencies:
+
+Install dependencies:
+
 ```bash
 pip install -r requirements.txt
 ```
-### Run the API:
+
+Run the API:
+
 ```bash
 uvicorn src.api.main:app --reload
 ```
-### Open in browser:
+
+Open the interactive API documentation:
+
+```text
 http://127.0.0.1:8000/docs
+```
 
-## Russian summary
+## Russian Summary
+
 Разработана ML-система для прогнозирования оттока клиентов телеком-компании с фокусом на бизнес-метрику — прибыль.
-В проекте использовались feature engineering, полный pipeline предобработки, сравнение нескольких моделей, подбор порога классификации и FastAPI для инференса.
 
-Лучшая финальная модель — CatBoost с порогом 0.3, выбранная на основе recall и итоговой прибыли, а не только стандартных ML-метрик.
+В проекте реализованы feature engineering, pipeline предобработки данных, сравнение нескольких моделей, подбор порога классификации и FastAPI-сервис для инференса.
+
+Финальная модель — CatBoost с порогом 0.3. Модель и порог выбирались с учетом recall и итоговой бизнес-прибыли, а не только стандартных ML-метрик.
