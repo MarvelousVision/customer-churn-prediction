@@ -17,7 +17,7 @@ def create_preprocessor(X):
     fe = FeatureEngineer()
     X_train_fe = fe.fit_transform(X)
     numeric_columns = X_train_fe.select_dtypes(
-        include=["int64", "float64"]
+        include=["number", "bool"]
     ).columns.tolist()
     categorical_columns = X_train_fe.select_dtypes(
         include=["object", "category"]

@@ -1,5 +1,4 @@
 data:
-    test_size: 0.2
     random_state: 42 
     target: 'Churn'
     target_mapping:
@@ -46,3 +45,7 @@ features:
     scale_numeric: true
     handle_unknown: "ignore"
     age_bins: 5 
+split:
+  train: 0.70
+  validation: 0.15
+  test: 0.15

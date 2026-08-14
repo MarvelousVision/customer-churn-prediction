@@ -59,6 +59,9 @@ def build_model_pipeline(X):
             n_estimators=params["n_estimators"],
             max_depth=params["max_depth"],
             random_state=params["random_state"],
+            min_samples_split=params["min_samples_split"], 
+            min_samples_leaf=params["min_samples_leaf"],     
+            max_features=params["max_features"],
             class_weight="balanced",
         )
 
@@ -107,11 +110,15 @@ def evaluate_model(y_proba, y_test, threshold):
     }
 
 
-def fit_and_score_model(m, X_train, X_test, y_train):
-    cv_scores = cross_val_score(m, X_train, y_train, cv=4)
+def fit_and_score_model(m, X_train, X_eval, y_train):
+    cv_scores = cross_val_score(m, 
+    X_train, 
+    y_train, 
+    cv=4, 
+    scoring="roc_auc")
     cv_mean = cv_scores.mean()
 
     m.fit(X_train, y_train)
 
-    y_proba = m.predict_proba(X_test)[:, 1]
+    y_proba = m.predict_proba(X_eval)[:, 1]
     return {"cv_mean": cv_mean, "y_proba": y_proba}

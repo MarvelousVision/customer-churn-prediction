@@ -1,5 +1,6 @@
-experiment_name,model,features_version,threshold,cv_mean,accuracy,precision,recall,profit,notes,depth,iterations,learning_rate
-cat_base_t03,catboost,base,0.3,0.7617,0.5779,0.4397,0.9968,488180,best final,8.0,60.0,0.03
-cat_extra_feat_t03,catboost,extra_features,0.3,0.7616,0.5784,0.4399,0.9961,486960,new features did not help,8.0,60.0,0.03
-rf_base_t03,random_forest,base,0.3,0.7477,0.5789,0.44,0.992,479640,strong recall,15.0,,
-lr_base_t03,logistic_regression,base,0.3,0.6861,0.6029,0.4514,0.9194,354540,simple baseline,,,
+experiment_name,model,features_version,evaluation_split,threshold,cv_roc_auc,accuracy,precision,recall,profit,notes,depth,iterations,learning_rate
+lr_base_t015_val,logistic_regression,base,validation,0.15,0.7830,0.4901,0.3940,0.9998,343960,best validation profit,,,
+dt_base_t010_val,decision_tree,base,validation,0.10,0.7917,0.5889,0.4454,0.9803,346420,best validation profit,15,,
+rf_base_t017_val,random_forest,base,validation,0.17,0.8027,0.5772,0.4395,1.0000,370360,best validation profit,15,100,
+cat_base_t020_val,catboost,base,validation,0.20,0.8044,0.5770,0.4393,1.0000,370300,selected final model; highest CV ROC-AUC and near-tied validation profit,8,60,0.03
+cat_base_t020_test,catboost,base,test_final,0.20,0.8044,0.5745,0.4378,0.9998,369160,final test evaluation after model and threshold selection,8,60,0.03
